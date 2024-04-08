@@ -1,0 +1,26 @@
+.nav-hor-flex {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
+  height: 70px;
+  background: black;
+  .nav-hor-logo{
+    width: 20vw;
+    text-align: left;
+    margin-left: 10px;
+    img {
+      width: 150px;
+    }
+  }
+  .nav-hor-flex-link {
+    width: 80vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .nav-hor-link {
+      color: white;
+
+    }
+  }
+}

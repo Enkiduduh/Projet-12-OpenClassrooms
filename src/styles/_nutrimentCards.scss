@@ -1,0 +1,25 @@
+.nutriment-cards-container {
+  width: 150px;
+  height: 80px;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  background: whitesmoke;
+  border-radius: 5px;
+  .nutriment-cards-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .nutriment-cards-infos {
+      .nutriment-cards-value {
+        font-size: 12px;
+      }
+      .nutriment-cards-value-name {
+        color: grey;
+        font-size: 10px;
+      }
+    }
+  }
+}

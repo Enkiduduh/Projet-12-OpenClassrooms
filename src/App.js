@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles/index.css";
+import Bonjour from "./components/Bonjour";
+import NavigationHor from "./components/NavigationHor";
+import NavigationVer from "./components/NavigationVer";
+import NutrimentIntel from "./components/NutrimentIntel";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavigationHor />
+      <div className="main-page">
+        <NavigationVer />
+        <div className="main-page-container">
+          <div className="main-page-bonjour">
+            <Bonjour />
+          </div>
+          <div className="main-page-infos">
+            <div className="main-page-graphics"></div>
+            <div className="main-page-values">
+              <NutrimentIntel />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

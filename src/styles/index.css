@@ -1,1 +1,93 @@
-/*# sourceMappingURL=index.css.map */
+.nav-hor-flex {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
+  height: 70px;
+  background: black;
+}
+.nav-hor-flex .nav-hor-logo {
+  width: 20vw;
+  text-align: left;
+  margin-left: 10px;
+}
+.nav-hor-flex .nav-hor-logo img {
+  width: 150px;
+}
+.nav-hor-flex .nav-hor-flex-link {
+  width: 80vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.nav-hor-flex .nav-hor-flex-link .nav-hor-link {
+  color: white;
+}
+
+.nutriment-cards-container {
+  width: 150px;
+  height: 80px;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  background: whitesmoke;
+  border-radius: 5px;
+}
+.nutriment-cards-container .nutriment-cards-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nutriment-cards-container .nutriment-cards-flex .nutriment-cards-infos .nutriment-cards-value {
+  font-size: 12px;
+}
+.nutriment-cards-container .nutriment-cards-flex .nutriment-cards-infos .nutriment-cards-value-name {
+  color: grey;
+  font-size: 10px;
+}
+
+.nav-ver-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 80px;
+  height: 100vh;
+  background: black;
+}
+.nav-ver-container .nav-ver-img-sport {
+  margin: 5px auto;
+}
+.nav-ver-container .nav-ver-img-sport img {
+  width: 50px;
+}
+
+body {
+  margin: 0;
+}
+
+.App .main-page {
+  display: flex;
+}
+.App .main-page .main-page-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+.App .main-page .main-page-container .main-page-bonjour {
+  width: 800px;
+  margin: 30px 0 50px 0;
+}
+.App .main-page .main-page-container .main-page-infos {
+  display: flex;
+  justify-content: space-around;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics {
+  background: grey;
+  width: 700px;
+  height: 400px;
+  margin-right: 50px;
+  border-radius: 5px;
+}/*# sourceMappingURL=index.css.map */
