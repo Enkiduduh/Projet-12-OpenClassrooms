@@ -15,7 +15,9 @@ function App() {
             <Bonjour />
           </div>
           <div className="main-page-infos">
-            <div className="main-page-graphics"></div>
+            <div className="main-page-graphics">
+              
+            </div>
             <div className="main-page-values">
               <NutrimentIntel />
             </div>

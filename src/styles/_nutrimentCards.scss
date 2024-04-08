@@ -1,9 +1,9 @@
 .nutriment-cards-container {
-  width: 150px;
+  width: 200px;
   height: 80px;
   color: whitesmoke;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   margin-bottom: 20px;
   background: whitesmoke;
@@ -12,9 +12,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    .nutriment-cards-img {
+      margin: 0 15px;
+      img {
+        width : 50px;
+      }
+    }
     .nutriment-cards-infos {
       .nutriment-cards-value {
-        font-size: 12px;
+        font-size: 14px;
+        color: black;
       }
       .nutriment-cards-value-name {
         color: grey;

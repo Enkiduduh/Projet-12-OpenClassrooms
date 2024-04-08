@@ -25,11 +25,10 @@
 }
 
 .nutriment-cards-container {
-  width: 150px;
+  width: 200px;
   height: 80px;
   color: whitesmoke;
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
   background: whitesmoke;
@@ -40,8 +39,15 @@
   justify-content: center;
   align-items: center;
 }
+.nutriment-cards-container .nutriment-cards-flex .nutriment-cards-img {
+  margin: 0 15px;
+}
+.nutriment-cards-container .nutriment-cards-flex .nutriment-cards-img img {
+  width: 50px;
+}
 .nutriment-cards-container .nutriment-cards-flex .nutriment-cards-infos .nutriment-cards-value {
-  font-size: 12px;
+  font-size: 14px;
+  color: black;
 }
 .nutriment-cards-container .nutriment-cards-flex .nutriment-cards-infos .nutriment-cards-value-name {
   color: grey;
@@ -68,6 +74,9 @@ body {
   margin: 0;
 }
 
+.App {
+  font-family: "Roboto", sans-serif;
+}
 .App .main-page {
   display: flex;
 }
