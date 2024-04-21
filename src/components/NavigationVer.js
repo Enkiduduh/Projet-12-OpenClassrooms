@@ -1,8 +1,9 @@
-import React from 'react'
-import iconSwim from '../assets/icn-swim.png';
-import iconMedit from '../assets/icn-medit.png';
-import iconRide from '../assets/icn-ride.png';
-import iconHalt from '../assets/icn-halt.png';
+import React from "react";
+import iconSwim from "../assets/icn-swim.png";
+import iconMedit from "../assets/icn-medit.png";
+import iconRide from "../assets/icn-ride.png";
+
+import iconHalt from "../assets/icn-halt.png";
 
 function NavigationVer() {
   return (
@@ -21,7 +22,7 @@ function NavigationVer() {
       </div>
       <span className="nav-ver-infos">Copyright, SportSee 2020</span>
     </div>
-  )
+  );
 }
 
-export default NavigationVer
+export default NavigationVer;

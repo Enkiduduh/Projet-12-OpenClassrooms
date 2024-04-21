@@ -99,4 +99,30 @@ body {
   height: 400px;
   margin-right: 50px;
   border-radius: 5px;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .upper-graphics {
+  background-color: aqua;
+  height: 50%;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics {
+  background-color: green;
+  height: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .average-session {
+  background-color: yellow;
+  height: 90%;
+  width: 31%;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radar-stat {
+  background-color: red;
+  height: 90%;
+  width: 31%;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radial-chart {
+  background-color: orange;
+  height: 90%;
+  width: 31%;
 }/*# sourceMappingURL=index.css.map */

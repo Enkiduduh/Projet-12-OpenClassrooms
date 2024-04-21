@@ -22,6 +22,32 @@ body {
           height:400px;
           margin-right: 50px;
           border-radius: 5px;
+          .upper-graphics{
+            background-color: aqua;
+            height: 50%;
+          }
+          .lower-graphics{
+            background-color: green;
+            height: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            .average-session {
+              background-color: yellow;
+              height:90%;
+              width: 31%;
+            }
+            .radar-stat {
+              background-color: red;
+              height:90%;
+              width: 31%;
+            }
+            .radial-chart {
+              background-color: orange;
+              height:90%;
+              width: 31%;
+            }
+          }
         }
         .main-page-values {
 
