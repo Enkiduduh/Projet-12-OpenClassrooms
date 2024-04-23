@@ -1,46 +1,22 @@
 import "./styles/index.css";
-import Bonjour from "./components/Bonjour";
-import NavigationHor from "./components/NavigationHor";
-import NavigationVer from "./components/NavigationVer";
-import NutrimentIntel from "./components/NutrimentIntel";
-import RadarStats from "./components/RadarStats";
-import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
-} from "recharts";
+import UserDashboard from "./components/UserDashboard";
+import NoFound from "./components/NoFound";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { faHandsClapping } from '@fortawesome/free-solid-svg-icons';
+
+
+library.add(fas, faHandsClapping)
 
 function App() {
   return (
-    <div className="App">
-      <NavigationHor />
-      <div className="main-page">
-        <NavigationVer />
-        <div className="main-page-container">
-          <div className="main-page-bonjour">
-            <Bonjour />
-          </div>
-          <div className="main-page-infos">
-            <div className="main-page-graphics">
-              <div className="upper-graphics">
-                <div className="activity-daily"></div>
-              </div>
-              <div className="lower-graphics">
-                <div className="average-session"></div>
-                <div className="radar-stat"></div>
-                <div className="radial-chart"></div>
-              </div>
-            </div>
-            <div className="main-page-values">
-              <NutrimentIntel />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<UserDashboard/>} />
+        <Route path="*" element={<NoFound/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

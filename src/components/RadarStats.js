@@ -7,11 +7,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function RadarStats({dataPerf, valueY, userId, valueX}) {
+function RadarStats({data, valueY, userId, valueX}) {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={dataPerf}>
+      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
         <PolarGrid />
         <PolarAngleAxis dataKey={valueY} />
         <PolarRadiusAxis />

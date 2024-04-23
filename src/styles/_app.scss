@@ -9,9 +9,10 @@ body {
       display: flex;
       flex-direction: column;
       margin: 0 auto;
+      justify-content: center;
       .main-page-bonjour {
         width: 800px;
-        margin:  30px 0 50px 0;
+        margin: 30px 0 50px 0;
       }
       .main-page-infos {
         display: flex;
@@ -19,14 +20,14 @@ body {
         .main-page-graphics {
           background: grey;
           width: 700px;
-          height:400px;
+          height: 400px;
           margin-right: 50px;
           border-radius: 5px;
-          .upper-graphics{
+          .upper-graphics {
             background-color: aqua;
             height: 50%;
           }
-          .lower-graphics{
+          .lower-graphics {
             background-color: green;
             height: 50%;
             display: flex;
@@ -34,23 +35,23 @@ body {
             align-items: center;
             .average-session {
               background-color: yellow;
-              height:90%;
+              height: 90%;
               width: 31%;
             }
             .radar-stat {
               background-color: red;
-              height:90%;
+              height: 90%;
               width: 31%;
             }
             .radial-chart {
               background-color: orange;
-              height:90%;
+              height: 90%;
               width: 31%;
             }
           }
         }
         .main-page-values {
-
+          color:blue;
         }
       }
     }
