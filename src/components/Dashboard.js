@@ -22,38 +22,11 @@ import {
   RadialBar,
   ResponsiveContainer,
 } from "recharts";
+import { UserPerformance, UserAverageSessions } from "./Modelisation";
 
 function Dashboard() {
-  const [userData, setUserData] = useState(null);
   const [userData2, setUserData2] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("../db.json");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  console.log(userData);
-
-  useEffect(() => {
-    if (userData) {
-      const userWithId12 = userData.user_main_data.find(
-        (user) => user.id === 12
-      );
-      console.log(userWithId12);
-    }
-  }, [userData]);
+  const [selectedUserId, setSelectedUserId] = useState(18); // UserId initial sélectionné
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,34 +45,18 @@ function Dashboard() {
     fetchData();
   }, []);
 
+  const handleUserIdChange = (userId) => {
+    setSelectedUserId(userId);
+  };
+
   useEffect(() => {
     if (userData2) {
-      const userWithId12 = userData2.user_activity.find(
-        (user) => user.userId === 12
+      const userWithSelectedId = userData2.user_activity.find(
+        (user) => user.userId === selectedUserId
       );
-      console.log(userWithId12);
+      console.log(selectedUserId);
     }
-  }, [userData2]);
-
-  const renderCustomizedLabel = (props) => {
-    const { x, y, width, height, value } = props;
-    const radius = 10;
-
-    return (
-      <g>
-        <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#8884d8" />
-        <text
-          x={x + width / 2}
-          y={y - radius}
-          fill="#fff"
-          textAnchor="middle"
-          dominantBaseline="middle"
-        >
-          {value.split(" ")[1]}
-        </text>
-      </g>
-    );
-  };
+  }, [userData2, selectedUserId]);
 
   const style = {
     top: 0,
@@ -107,39 +64,84 @@ function Dashboard() {
     lineHeight: "20px",
   };
 
+  const dataNutriment =
+    userData2 &&
+    userData2.user_main_data.find((user) => user.id === selectedUserId)
+      ?.keyData;
+
+  const dataName =
+    userData2 &&
+    userData2.user_main_data.find((user) => user.id === selectedUserId)
+      ?.userInfos;
+
+  useEffect(() => {
+    // Vérifier si userData2 est défini avant d'instancier UserPerformance
+    if (userData2) {
+      // Créer une instance de la classe et transformer les données
+      const formattedDataRadial = new UserPerformance(
+        userData2
+      ).getFormattedData();
+      const formattedDataLineChart = new UserAverageSessions(
+        userData2
+      ).getFormattedData();
+      // Afficher les données formatées
+      console.log(formattedDataRadial);
+      console.log(formattedDataLineChart);
+    }
+  }, [userData2]);
+
   return (
     <div className="main-page-container">
-      {userData && (
+      {userData2 && dataName && (
         <>
-          <Bonjour user={userData.user_main_data[0].userInfos.firstName} />
+          <Bonjour user={dataName.firstName} />
           <div className="main-page-infos">
             <div className="main-page-graphics">
               <div className="upper-graphics">
                 <div className="activity-daily">
                   {userData2 && (
-                      <BarChart
-                        width={800}
-                        height={200}
-                        data={
-                          userData2.user_activity.find(
-                            (user) => user.userId === 12
-                          ).sessions
-                        }
-                        margin={{
-                          top: 5,
-                          right: 30,
-                          left: 20,
-                          bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="kilogram" fill="#8884d8" />
-                        <Bar dataKey="calories" fill="#82ca9d" />
-                      </BarChart>
+                    <BarChart
+                      width={800}
+                      height={220}
+                      data={
+                        userData2.user_activity.find(
+                          (user) => user.userId === selectedUserId
+                        ).sessions
+                      }
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="day" />
+                      <YAxis />
+                      <Tooltip
+                        wrapperStyle={{ width: 100, backgroundColor: "#ccc" }}
+                      />
+                      <Legend
+                        width={300}
+                        wrapperStyle={{ top: 10, right: 20 }}
+                      />
+                      <Bar
+                        dataKey="kilogram"
+                        fill="#FF0000"
+                        name="Poids (kg)"
+                        legendType="circle"
+                        barSize={10}
+                        radius={[10, 10, 0, 0]}
+                      />
+                      <Bar
+                        dataKey="calories"
+                        fill="#000000"
+                        name="Calories brûlées (kCal)"
+                        legendType="circle"
+                        barSize={10}
+                        radius={[10, 10, 0, 0]}
+                      />
+                    </BarChart>
                   )}
                 </div>
               </div>
@@ -153,7 +155,7 @@ function Dashboard() {
                           height={200}
                           data={
                             userData2.user_average_sessions.find(
-                              (user) => user.userId === 12
+                              (user) => user.userId === selectedUserId
                             ).sessions
                           }
                           margin={{
@@ -180,29 +182,44 @@ function Dashboard() {
                 </div>
 
                 <div className="radar-stat">
-                  <RadarChart
-                    cx={300}
-                    cy={250}
-                    outerRadius={100}
-                    width={500}
-                    height={500}
-                    data={
-                      userData2.user_performance.find(
-                        (user) => user.userId === 12
-                      ).data
-                    }
-                  >
-                    <PolarGrid />
-                    <PolarAngleAxis dataKey="kind" tick={{ fill: "#333" }} />
-                    <PolarRadiusAxis />
-                    <Radar
-                      name="Mike"
-                      dataKey="value"
-                      stroke="#8884d8"
-                      fill="#8884d8"
-                      fillOpacity={0.6}
-                    />
-                  </RadarChart>
+                  {userData2 &&  (
+                    <RadarChart
+                      cx={300}
+                      cy={250}
+                      outerRadius={100}
+                      width={500}
+                      height={500}
+                      data={
+                        userData2.user_performance.find(
+                          (user) => user.userId === selectedUserId
+                        )?.data || [] // Utilisation de la condition optionnelle pour gérer le cas où les données ne sont pas présentes
+                      }
+                    >
+                      {userData2.user_performance.find(
+                        (user) => user.userId === selectedUserId
+                      ) ? (
+                        <>
+                          <PolarGrid />
+                          <PolarAngleAxis
+                            dataKey="kind"
+                            tick={{ fill: "#333" }}
+                          />
+                          <PolarRadiusAxis />
+                          <Radar
+                            name="Mike"
+                            dataKey="value"
+                            stroke="#8884d8"
+                            fill="#8884d8"
+                            fillOpacity={0.6}
+                          />
+                        </>
+                      ) : (
+                        <text x={250} y={250} textAnchor="middle" fill="#333">
+                          Aucune donnée disponible pour cet utilisateur.
+                        </text>
+                      )}
+                    </RadarChart>
+                  )}
                 </div>
 
                 <div className="radial-chart">
@@ -219,7 +236,7 @@ function Dashboard() {
                         barSize={15}
                         data={[
                           userData2.user_main_data.find(
-                            (user) => user.id === 12
+                            (user) => user.id === selectedUserId
                           ),
                         ]} // Fournir uniquement les données pertinentes
                       >
@@ -246,22 +263,28 @@ function Dashboard() {
               </div>
             </div>
             <div className="main-page-values">
-              {userData && (
+              {dataNutriment && (
                 <NutrimentIntel
                   value1={
-                    (
-                      userData.user_main_data[0].keyData.calorieCount / 1000
-                    ).toLocaleString("fr-FR", { minimumFractionDigits: 3 }) +
-                    "kCal"
+                    (dataNutriment.calorieCount / 1000).toLocaleString(
+                      "fr-FR",
+                      { minimumFractionDigits: 3 }
+                    ) + "kCal"
                   }
-                  value2={userData.user_main_data[0].keyData.proteinCount + "g"}
-                  value3={
-                    userData.user_main_data[0].keyData.carbohydrateCount + "g"
-                  }
-                  value4={userData.user_main_data[0].keyData.lipidCount + "g"}
+                  value2={dataNutriment.proteinCount + "g"}
+                  value3={dataNutriment.carbohydrateCount + "g"}
+                  value4={dataNutriment.lipidCount + "g"}
                 />
               )}
             </div>
+          </div>
+          <div>
+            <button onClick={() => handleUserIdChange(12)}>
+              Utilisateur 12
+            </button>
+            <button onClick={() => handleUserIdChange(18)}>
+              Utilisateur 18
+            </button>
           </div>
         </>
       )}
