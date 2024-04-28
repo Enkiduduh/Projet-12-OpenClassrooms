@@ -1,12 +1,19 @@
-import React from 'react'
+import React from "react";
+import handsClap from "../assets/clap.png";
 
-function Bonjour({user}) {
+function Bonjour({ user }) {
   return (
     <div>
-      <h1 className="bonjour">Bonjour {user}</h1>
-      <div className="objectifs">Félicitations ! Vous avez explosé vos objectifs hier</div>
+      <div className="bonjour-container">
+        <div className="bonjour1">Bonjour</div>
+        <div className="bonjour2"> {user}</div>
+      </div>
+      <div className="objectifs">
+        Félicitations ! Vous avez explosé vos objectifs hier
+        <img src={handsClap} alt=""></img>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Bonjour
+export default Bonjour;

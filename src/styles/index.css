@@ -1,3 +1,25 @@
+.bonjour-container {
+  display: flex;
+}
+.bonjour-container .bonjour1 {
+  margin-right: 15px;
+  font-size: 48px;
+  font-weight: 500;
+}
+.bonjour-container .bonjour2 {
+  color: red;
+  font-size: 48px;
+  font-weight: 500;
+}
+
+.objectifs {
+  margin: 20px 0 50px 0;
+}
+.objectifs img {
+  width: 16px;
+  margin-left: 5px;
+}
+
 .nav-hor-flex {
   display: flex;
   justify-content: space-around;
@@ -83,8 +105,7 @@ body {
 .App .main-page .main-page-container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  justify-content: center;
+  margin: 50px auto 0 auto;
 }
 .App .main-page .main-page-container .main-page-bonjour {
   width: 800px;
@@ -96,7 +117,7 @@ body {
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics {
   background: grey;
-  width: 700px;
+  width: 800px;
   height: 400px;
   margin-right: 50px;
   border-radius: 5px;
@@ -113,19 +134,28 @@ body {
   align-items: center;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .average-session {
-  background-color: yellow;
-  height: 90%;
-  width: 31%;
-}
-.App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radar-stat {
   background-color: red;
   height: 90%;
   width: 31%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radar-stat {
+  background-color: whitesmoke;
+  height: 90%;
+  width: 31%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radial-chart {
   background-color: orange;
   height: 90%;
   width: 31%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-values {
   color: blue;

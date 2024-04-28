@@ -1,0 +1,20 @@
+.bonjour-container {
+  display: flex;
+  .bonjour1 {
+    margin-right: 15px;
+    font-size: 48px;
+    font-weight: 500;
+  }
+  .bonjour2 {
+    color: red;
+    font-size: 48px;
+    font-weight: 500;
+  }
+}
+.objectifs {
+  margin: 20px 0 50px 0;
+  img {
+    width: 16px;
+    margin-left: 5px;
+  }
+}
