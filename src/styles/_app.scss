@@ -18,51 +18,62 @@ body {
         display: flex;
         justify-content: space-around;
         .main-page-graphics {
-          background: grey;
           width: 800px;
-          height: 400px;
+          height: 500px;
           margin-right: 50px;
           border-radius: 5px;
           .upper-graphics {
             background-color: aqua;
             height: 50%;
+            border-radius: 5px;
+            margin: 0 auto;
+            .activity-daily {
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+            }
           }
           .lower-graphics {
-            background-color: green;
             height: 50%;
             display: flex;
             justify-content: space-around;
             align-items: center;
             .average-session {
               background-color: red;
-              height: 90%;
+              height: 95%;
               width: 31%;
-              display : flex;
+              display: flex;
               justify-content: center;
               align-items: center;
+              border-radius: 5px;
             }
             .radar-stat {
-              background-color: whitesmoke;
-              height: 90%;
+              background-color: rgb(44, 43, 43);
+              height: 95%;
               width: 31%;
-              display : flex;
+              display: flex;
               justify-content: center;
               align-items: center;
+              border-radius: 5px;
             }
+
+
             .radial-chart {
-              background-color: orange;
-              height: 90%;
+              background-color: whitesmoke;
+              height: 95%;
               width: 31%;
-              display : flex;
+              display: flex;
               justify-content: center;
               align-items: center;
+              border-radius: 5px;
             }
           }
         }
         .main-page-values {
-          color:blue;
+          color: blue;
         }
       }
     }
   }
+
 }

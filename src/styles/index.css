@@ -116,18 +116,23 @@ body {
   justify-content: space-around;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics {
-  background: grey;
   width: 800px;
-  height: 400px;
+  height: 500px;
   margin-right: 50px;
   border-radius: 5px;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .upper-graphics {
   background-color: aqua;
   height: 50%;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .upper-graphics .activity-daily {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics {
-  background-color: green;
   height: 50%;
   display: flex;
   justify-content: space-around;
@@ -135,27 +140,30 @@ body {
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .average-session {
   background-color: red;
-  height: 90%;
+  height: 95%;
   width: 31%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5px;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radar-stat {
-  background-color: whitesmoke;
-  height: 90%;
+  background-color: rgb(44, 43, 43);
+  height: 95%;
   width: 31%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5px;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radial-chart {
-  background-color: orange;
-  height: 90%;
+  background-color: whitesmoke;
+  height: 95%;
   width: 31%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5px;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-values {
   color: blue;

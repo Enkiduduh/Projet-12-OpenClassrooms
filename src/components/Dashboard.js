@@ -26,7 +26,7 @@ import { UserPerformance, UserAverageSessions } from "./Modelisation";
 
 function Dashboard() {
   const [userData2, setUserData2] = useState(null);
-  const [selectedUserId, setSelectedUserId] = useState(18); // UserId initial sélectionné
+  const [selectedUserId, setSelectedUserId] = useState(12); // UserId initial sélectionné
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,48 +100,50 @@ function Dashboard() {
               <div className="upper-graphics">
                 <div className="activity-daily">
                   {userData2 && (
-                    <BarChart
-                      width={800}
-                      height={220}
-                      data={
-                        userData2.user_activity.find(
-                          (user) => user.userId === selectedUserId
-                        ).sessions
-                      }
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                      }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="day" />
-                      <YAxis />
-                      <Tooltip
-                        wrapperStyle={{ width: 100, backgroundColor: "#ccc" }}
-                      />
-                      <Legend
-                        width={300}
-                        wrapperStyle={{ top: 10, right: 20 }}
-                      />
-                      <Bar
-                        dataKey="kilogram"
-                        fill="#FF0000"
-                        name="Poids (kg)"
-                        legendType="circle"
-                        barSize={10}
-                        radius={[10, 10, 0, 0]}
-                      />
-                      <Bar
-                        dataKey="calories"
-                        fill="#000000"
-                        name="Calories brûlées (kCal)"
-                        legendType="circle"
-                        barSize={10}
-                        radius={[10, 10, 0, 0]}
-                      />
-                    </BarChart>
+                    <ResponsiveContainer width={800} height={220}>
+                      <BarChart
+                        width={800}
+                        height={220}
+                        data={
+                          userData2.user_activity.find(
+                            (user) => user.userId === selectedUserId
+                          ).sessions
+                        }
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="day" />
+                        <YAxis />
+                        <Tooltip
+                          wrapperStyle={{ width: 100, backgroundColor: "#ccc" }}
+                        />
+                        <Legend
+                          width={300}
+                          wrapperStyle={{ top: 10, right: 20 }}
+                        />
+                        <Bar
+                          dataKey="kilogram"
+                          fill="#FF0000"
+                          name="Poids (kg)"
+                          legendType="circle"
+                          barSize={10}
+                          radius={[10, 10, 0, 0]}
+                        />
+                        <Bar
+                          dataKey="calories"
+                          fill="#000000"
+                          name="Calories brûlées (kCal)"
+                          legendType="circle"
+                          barSize={10}
+                          radius={[10, 10, 0, 0]}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
                   )}
                 </div>
               </div>
@@ -152,29 +154,49 @@ function Dashboard() {
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                           width={700}
-                          height={200}
+                          height={100}
                           data={
                             userData2.user_average_sessions.find(
                               (user) => user.userId === selectedUserId
                             ).sessions
                           }
                           margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
+                            top: 60,
+                            right: 10,
+                            left: 10,
                             bottom: 5,
                           }}
                         >
-                          <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="day" />
-                          <Tooltip />
+                          <YAxis dataKey='sessionLength' hide={true} domain={['dataMin-10', 'dataMax+10']} />
+
+                          <Tooltip formatter={(value) => `${value} min`} />
                           <Legend />
                           <Line
-                            type="monotone"
+                            type="natural"
                             dataKey="sessionLength"
                             stroke="#8884d8"
                             activeDot={{ r: 8 }}
+                            legendType="none"
                           />
+                          <text
+                            x={100}
+                            y={40}
+                            textAnchor="middle"
+                            fill="white"
+                            fillOpacity={0.6}
+                          >
+                            Durée moyenne des
+                          </text>
+                          <text
+                            x={61}
+                            y={60}
+                            textAnchor="middle"
+                            fill="white"
+                            fillOpacity={0.6}
+                          >
+                            sessions
+                          </text>
                         </LineChart>
                       </ResponsiveContainer>
                     )}
@@ -182,81 +204,90 @@ function Dashboard() {
                 </div>
 
                 <div className="radar-stat">
-                  {userData2 &&  (
-                    <RadarChart
-                      cx={300}
-                      cy={250}
-                      outerRadius={100}
-                      width={500}
-                      height={500}
-                      data={
-                        userData2.user_performance.find(
+                  {userData2 && (
+                    <ResponsiveContainer width={400} height={200}>
+                      <RadarChart
+                        cx={200}
+                        cy={100}
+                        outerRadius={130}
+                        width={500}
+                        height={500}
+                        data={
+                          userData2.user_performance.find(
+                            (user) => user.userId === selectedUserId
+                          )?.data || [] // Utilisation de la condition optionnelle pour gérer le cas où les données ne sont pas présentes
+                        }
+                      >
+                        {userData2.user_performance.find(
                           (user) => user.userId === selectedUserId
-                        )?.data || [] // Utilisation de la condition optionnelle pour gérer le cas où les données ne sont pas présentes
-                      }
-                    >
-                      {userData2.user_performance.find(
-                        (user) => user.userId === selectedUserId
-                      ) ? (
-                        <>
-                          <PolarGrid />
-                          <PolarAngleAxis
-                            dataKey="kind"
-                            tick={{ fill: "#333" }}
-                          />
-                          <PolarRadiusAxis />
-                          <Radar
-                            name="Mike"
-                            dataKey="value"
-                            stroke="#8884d8"
-                            fill="#8884d8"
-                            fillOpacity={0.6}
-                          />
-                        </>
-                      ) : (
-                        <text x={250} y={250} textAnchor="middle" fill="#333">
-                          Aucune donnée disponible pour cet utilisateur.
-                        </text>
-                      )}
-                    </RadarChart>
+                        ) ? (
+                          <>
+                            <PolarGrid stroke="white" gridType="polygon" />
+                            <PolarAngleAxis
+                              dataKey="kind"
+                              tick={{ fill: "white" }}
+                            />
+                            <PolarRadiusAxis axisLine={false} tick={false} />
+                            <Radar
+                              dataKey="value"
+                              stroke="red"
+                              fill="red"
+                              fillOpacity={0.6}
+                              legendType="none"
+                            />
+                          </>
+                        ) : (
+                          <text x={250} y={250} textAnchor="middle" fill="#333">
+                            Aucune donnée disponible pour cet utilisateur.
+                          </text>
+                        )}
+                      </RadarChart>
+                    </ResponsiveContainer>
                   )}
                 </div>
 
                 <div className="radial-chart">
                   <>
                     {userData2 && (
-                      // <ResponsiveContainer width="100%" height="100%">
-                      <RadialBarChart
-                        width={500}
-                        height={300}
-                        cx={150}
-                        cy={150}
-                        innerRadius={80}
-                        outerRadius={150}
-                        barSize={15}
-                        data={[
-                          userData2.user_main_data.find(
-                            (user) => user.id === selectedUserId
-                          ),
-                        ]} // Fournir uniquement les données pertinentes
-                      >
-                        <RadialBar
-                          minAngle={15}
-                          label={{ position: "insideStart", fill: "#a4de6c" }}
-                          background
-                          clockWise
-                          dataKey={(entry) => entry.todayScore * 100}
-                        />
-                        <Legend
-                          iconSize={10}
-                          width={220}
-                          height={140}
-                          layout="vertical"
-                          verticalAlign="middle"
-                          wrapperStyle={style}
-                        />
-                      </RadialBarChart>
-                      //  <ResponsiveContainer/>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadialBarChart
+                          width={500}
+                          height={300}
+                          cx={125}
+                          cy={125}
+                          innerRadius={90}
+                          outerRadius={80}
+                          barSize={15}
+                          data={[
+                            userData2.user_main_data.find(
+                              (user) => user.id === selectedUserId
+                            ),
+                          ]} // Fournir uniquement les données pertinentes
+                          fill="white"
+                        >
+                          <RadialBar
+                            minAngle={15}
+                            fill="red"
+                            label={{ position: "outside", fill: "black" }}
+                            background
+                            clockWise
+                            dataKey="todayScore"
+                          />
+
+                          <text x={20} y={30} fill="black">
+                            Score
+                          </text>
+                          <text x={100} y={110} fill="black" stroke="black">
+                            {userData2.todayScore * 100}%
+                          </text>
+                          <text x={100} y={130} fill="grey">
+                            de votre
+                          </text>
+                          <text x={100} y={150} fill="grey">
+                            objectif
+                          </text>
+                        </RadialBarChart>
+                      </ResponsiveContainer>
                     )}
                   </>
                 </div>
