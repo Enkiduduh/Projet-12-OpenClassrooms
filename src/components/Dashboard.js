@@ -22,11 +22,19 @@ import {
   RadialBar,
   ResponsiveContainer,
 } from "recharts";
-import { UserPerformance, UserAverageSessions } from "./Modelisation";
+import PropTypes from "prop-types";
+import {
+  UserPerformance,
+  UserAverageSessions,
+  UserDailyActivity,
+} from "./Modelisation";
 
 function Dashboard() {
   const [userData2, setUserData2] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(12); // UserId initial sélectionné
+
+  const [minWeight, setMinWeight] = useState(null);
+  const [maxWeight, setMaxWeight] = useState(100);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,11 +92,48 @@ function Dashboard() {
       const formattedDataLineChart = new UserAverageSessions(
         userData2
       ).getFormattedData();
+      const { formattedData, minWeight, maxWeight } = new UserDailyActivity(
+        userData2.user_activity.find(
+          (user) => user.userId === selectedUserId
+        ).sessions
+      ).getFormattedData();
+
+      setMinWeight(minWeight);
+      setMaxWeight(maxWeight);
       // Afficher les données formatées
       console.log(formattedDataRadial);
       console.log(formattedDataLineChart);
+      console.log(formattedData);
+      console.log(minWeight);
+      console.log(maxWeight);
     }
-  }, [userData2]);
+  }, [userData2, selectedUserId]);
+
+  const CustomToolTip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const weightValue = payload[0]?.value ?? 0;
+      const calorieValue = payload[1]?.value ?? 0;
+
+      return (
+        <div className="tooltipActivity">
+          <p>{weightValue + "kg"}</p>
+          <p>{calorieValue + "kCal"}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  CustomToolTip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.number,
+        name: PropTypes.string,
+      })
+    ),
+  };
+  const formatXAxis = (value, index) => index + 1;
 
   return (
     <div className="main-page-container">
@@ -115,12 +160,47 @@ function Dashboard() {
                           left: 20,
                           bottom: 5,
                         }}
+                        barSize={10}
+                        barGap={10}
                       >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
+                        <CartesianGrid
+                          stroke="rgba(222, 222, 222, 1)"
+                          strokeDasharray="2 2"
+                          vertical={false}
+                        />
+                        <YAxis dataKey="calories" yAxisId="left" hide={true} />
+                        <YAxis
+                          dataKey="kilogram"
+                          yAxisId="right"
+                          orientation="right"
+                          domain={[minWeight, maxWeight]}
+                          tickCount={4}
+                          tickLine={false}
+                          axisLine={{ stroke: "transparent" }}
+                          tick={{
+                            dx: 16,
+                            style: {
+                              fontSize: "14px",
+                              fill: "rgba(155, 158, 172, 1)",
+                            },
+                          }}
+                        />
+                        <XAxis
+                          // tick={{
+                          //   dy: 16,
+                          //   style: {
+                          //     fontSize: "14px",
+                          //     fill: "rgba(155, 158, 172, 1)",
+                          //   },
+                          // }}
+                          tickFormatter={formatXAxis}
+                          // axisLine={{ stroke: "transparent" }}
+                          // tickLine={false}
+                          dataKey="day"
+                        />
                         <Tooltip
-                          wrapperStyle={{ width: 100, backgroundColor: "#ccc" }}
+                          content={<CustomToolTip />}
+                          wrapperStyle={{ width: 50, backgroundColor: "red" }}
                         />
                         <Legend
                           width={300}
@@ -131,16 +211,16 @@ function Dashboard() {
                           fill="#FF0000"
                           name="Poids (kg)"
                           legendType="circle"
-                          barSize={10}
                           radius={[10, 10, 0, 0]}
+                          yAxisId="right"
                         />
                         <Bar
                           dataKey="calories"
                           fill="#000000"
                           name="Calories brûlées (kCal)"
                           legendType="circle"
-                          barSize={10}
                           radius={[10, 10, 0, 0]}
+                          yAxisId="left"
                         />
                       </BarChart>
                     </ResponsiveContainer>
@@ -168,7 +248,11 @@ function Dashboard() {
                           }}
                         >
                           <XAxis dataKey="day" />
-                          <YAxis dataKey='sessionLength' hide={true} domain={['dataMin-10', 'dataMax+10']} />
+                          <YAxis
+                            dataKey="sessionLength"
+                            hide={true}
+                            domain={["dataMin-10", "dataMax+10"]}
+                          />
 
                           <Tooltip formatter={(value) => `${value} min`} />
                           <Legend />

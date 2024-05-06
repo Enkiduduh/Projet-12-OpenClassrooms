@@ -1,10 +1,29 @@
-class userActivity {
-  constructor(userId, sessions) {
-    this.userId = userId;
-    this.sessions = sessions;
+class UserDailyActivity {
+  constructor(data) {
+    this.data = data;
   }
 
+  getFormattedData() {
+    const minWeight = Math.min(...this.data.map((entry) => entry.kilogram)) - 1;
+    const maxWeight = Math.max(...this.data.map((entry) => entry.kilogram)) + 1;
+
+    const formattedData = this.data.map((entry) => ({
+      day: entry.day,
+      kilogram: entry.kilogram,
+      calories: entry.calories,
+    }));
+
+    return {
+      formattedData,
+      minWeight,
+      maxWeight,
+      // originalData: this.data, // Ajouter originalData pour renvoyer les données d'origine
+    };
+  }
 }
+
+
+
 
 class userMainData {
   constructor(data) {
@@ -65,4 +84,4 @@ class UserPerformance {
 }
 
 
-export { userMainData, userActivity, UserAverageSessions, UserPerformance}
+export { userMainData, UserDailyActivity, UserAverageSessions, UserPerformance}

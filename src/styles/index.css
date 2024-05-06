@@ -122,15 +122,20 @@ body {
   border-radius: 5px;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .upper-graphics {
-  background-color: aqua;
+  background-color: whitesmoke;
   height: 50%;
   border-radius: 5px;
   margin: 0 auto;
-}
-.App .main-page .main-page-container .main-page-infos .main-page-graphics .upper-graphics .activity-daily {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .upper-graphics .activity-daily .tooltipActivity {
+  width: 50px;
+  text-align: center;
+  margin: 0 auto;
+  color: white;
+  font-size: 10px;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics {
   height: 50%;
