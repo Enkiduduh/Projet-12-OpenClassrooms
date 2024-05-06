@@ -128,7 +128,7 @@ body {
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .upper-graphics .activity-daily .tooltipActivity {
   width: 50px;
@@ -151,6 +151,13 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+}
+.App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .average-session .tooltipSessionLength {
+  width: 40px;
+  text-align: center;
+  margin: 0 auto;
+  color: black;
+  font-size: 10px;
 }
 .App .main-page .main-page-container .main-page-infos .main-page-graphics .lower-graphics .radar-stat {
   background-color: rgb(44, 43, 43);

@@ -29,7 +29,7 @@ body {
             margin: 0 auto;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: end;
             .activity-daily {
               .tooltipActivity {
                 width: 50px;
@@ -53,6 +53,13 @@ body {
               justify-content: center;
               align-items: center;
               border-radius: 5px;
+              .tooltipSessionLength {
+                width: 40px;
+                text-align: center;
+                margin: 0 auto;
+                color: black;
+                font-size: 10px;
+              }
             }
             .radar-stat {
               background-color: rgb(44, 43, 43);

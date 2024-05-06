@@ -82,6 +82,14 @@ function Dashboard() {
     userData2.user_main_data.find((user) => user.id === selectedUserId)
       ?.userInfos;
 
+  const dataScore =
+    (userData2 &&
+      userData2.user_main_data.find((user) => user.id === selectedUserId)
+        ?.todayScore) ||
+    (userData2 &&
+      userData2.user_main_data.find((user) => user.id === selectedUserId)
+        ?.score);
+
   useEffect(() => {
     // Vérifier si userData2 est défini avant d'instancier UserPerformance
     if (userData2) {
@@ -107,7 +115,7 @@ function Dashboard() {
       console.log(minWeight);
       console.log(maxWeight);
     }
-  }, [userData2, selectedUserId]);
+  }, [userData2]);
 
   const CustomToolTip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -135,6 +143,19 @@ function Dashboard() {
   };
   const formatXAxis = (value, index) => index + 1;
 
+  const CustomToolTipSessionLength = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const sessionLentgthInMin = payload[0]?.value ?? 0;
+
+      return (
+        <div className="tooltipSessionLength">
+          <p>{sessionLentgthInMin + " " + "min"}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="main-page-container">
       {userData2 && dataName && (
@@ -145,10 +166,10 @@ function Dashboard() {
               <div className="upper-graphics">
                 <div className="activity-daily">
                   {userData2 && (
-                    <ResponsiveContainer width={800} height={220}>
+                    <ResponsiveContainer width={800} height={180}>
                       <BarChart
-                        width={800}
-                        height={220}
+                        // width={800}
+                        // height={180}
                         data={
                           userData2.user_activity.find(
                             (user) => user.userId === selectedUserId
@@ -186,16 +207,15 @@ function Dashboard() {
                           }}
                         />
                         <XAxis
-                          // tick={{
-                          //   dy: 16,
-                          //   style: {
-                          //     fontSize: "14px",
-                          //     fill: "rgba(155, 158, 172, 1)",
-                          //   },
-                          // }}
+                          tick={{
+                            dy: 16,
+                            style: {
+                              fontSize: "14px",
+                              fill: "rgba(155, 158, 172, 1)",
+                            },
+                          }}
                           tickFormatter={formatXAxis}
-                          // axisLine={{ stroke: "transparent" }}
-                          // tickLine={false}
+                          tickLine={false}
                           dataKey="day"
                         />
                         <Tooltip
@@ -204,7 +224,7 @@ function Dashboard() {
                         />
                         <Legend
                           width={300}
-                          wrapperStyle={{ top: 10, right: 20 }}
+                          wrapperStyle={{ top: -40, right: 30 }}
                         />
                         <Bar
                           dataKey="kilogram"
@@ -222,6 +242,15 @@ function Dashboard() {
                           radius={[10, 10, 0, 0]}
                           yAxisId="left"
                         />
+                        <text
+                          x={-20}
+                          y={-10}
+                          fill="#333"
+                          fontWeight={500}
+                          style={{ position: "absolute" }}
+                        >
+                          Activité quotidienne
+                        </text>
                       </BarChart>
                     </ResponsiveContainer>
                   )}
@@ -233,8 +262,8 @@ function Dashboard() {
                     {userData2 && (
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart
-                          width={700}
-                          height={100}
+                          width="100%"
+                          height="100%"
                           data={
                             userData2.user_average_sessions.find(
                               (user) => user.userId === selectedUserId
@@ -242,26 +271,48 @@ function Dashboard() {
                           }
                           margin={{
                             top: 60,
-                            right: 10,
-                            left: 10,
-                            bottom: 5,
+                            right: 20,
+                            left: 0,
+                            bottom: 10,
                           }}
                         >
-                          <XAxis dataKey="day" />
+                          <XAxis
+                            dataKey="day"
+                            axisLine={{ stroke: "transparent" }}
+                            tickLine={false}
+                            tick={{
+                              dx: 16,
+                              style: {
+                                fontSize: "14px",
+                                fill: "rgba(200, 200, 200, 1)",
+                              },
+                            }}
+                            interval="preserveStartEnd"
+                          />
                           <YAxis
                             dataKey="sessionLength"
                             hide={true}
                             domain={["dataMin-10", "dataMax+10"]}
                           />
-
-                          <Tooltip formatter={(value) => `${value} min`} />
+                          <Tooltip
+                            formatter={(value) => `${value} min`}
+                            wrapperStyle={{ backgroundColor: "white" }}
+                            content={<CustomToolTipSessionLength />}
+                            labelFormatter={(value) => `Jour ${value}`}
+                          />
                           <Legend />
                           <Line
                             type="natural"
                             dataKey="sessionLength"
-                            stroke="#8884d8"
-                            activeDot={{ r: 8 }}
+                            stroke="url(#colorUv)"
+                            activeDot={{
+                              stroke: "#FFFFFF",
+                              strokeWidth: 8,
+                              r: 4,
+                            }}
+                            dot={false}
                             legendType="none"
+                            strokeWidth={2}
                           />
                           <text
                             x={100}
@@ -281,6 +332,36 @@ function Dashboard() {
                           >
                             sessions
                           </text>
+                          <defs>
+                            <linearGradient
+                              id="colorUv"
+                              x1="0%"
+                              y1="0"
+                              x2="100%"
+                              y2="0"
+                            >
+                              <stop
+                                offset="0%"
+                                stopColor="rgba(255, 255, 255, 0.3)"
+                              />
+                              <stop
+                                offset="20%"
+                                stopColor="rgba(255, 255, 255, 0.4)"
+                              />
+                              <stop
+                                offset="40%"
+                                stopColor="rgba(255, 255, 255, 0.5)"
+                              />
+                              <stop
+                                offset="60%"
+                                stopColor="rgba(255, 255, 255, 0.6)"
+                              />
+                              <stop
+                                offset="100%"
+                                stopColor="rgba(255, 255, 255, 1)"
+                              />
+                            </linearGradient>
+                          </defs>
                         </LineChart>
                       </ResponsiveContainer>
                     )}
@@ -306,7 +387,11 @@ function Dashboard() {
                           (user) => user.userId === selectedUserId
                         ) ? (
                           <>
-                            <PolarGrid stroke="white" gridType="polygon" />
+                            <PolarGrid
+                              stroke="white"
+                              gridType="polygon"
+                              radialLines={false}
+                            />
                             <PolarAngleAxis
                               dataKey="kind"
                               tick={{ fill: "white" }}
@@ -343,26 +428,42 @@ function Dashboard() {
                           outerRadius={80}
                           barSize={15}
                           data={[
-                            userData2.user_main_data.find(
-                              (user) => user.id === selectedUserId
-                            ),
+                            {
+                              ...userData2.user_main_data.find(
+                                (user) => user.id === selectedUserId
+                              ),
+                            },
                           ]} // Fournir uniquement les données pertinentes
                           fill="white"
+
                         >
                           <RadialBar
                             minAngle={15}
                             fill="red"
-                            label={{ position: "outside", fill: "black" }}
                             background
                             clockWise
-                            dataKey="todayScore"
+                            dataKey={
+                              userData2?.user_main_data.find(
+                                (user) => user.id === selectedUserId
+                              )?.todayScore
+                                ? "todayScore"
+                                : "score"
+                            }
                           />
 
                           <text x={20} y={30} fill="black">
                             Score
                           </text>
-                          <text x={100} y={110} fill="black" stroke="black">
-                            {userData2.todayScore * 100}%
+                          <text
+                            x={105}
+                            y={110}
+                            fill="black"
+                            stroke="black"
+                            fontSize="24"
+                            fontWeight={500}
+                            startAngle={90}
+                          >
+                            {dataScore * 100}%
                           </text>
                           <text x={100} y={130} fill="grey">
                             de votre
