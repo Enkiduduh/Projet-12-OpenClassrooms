@@ -1,11 +1,14 @@
 import Logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 function NavigationHor() {
   return (
     <div className="nav-hor-container">
       <div className="nav-hor-flex">
         <div className="nav-hor-logo">
-          <img src={Logo} alt="Logo de SportSee"></img>
+          <Link to="/">
+            <img src={Logo} alt="Logo de SportSee"></img>
+          </Link>
         </div>
         <div className="nav-hor-flex-link">
           <h3 className="nav-hor-link">Accueil</h3>

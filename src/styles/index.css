@@ -179,4 +179,23 @@ body {
 }
 .App .main-page .main-page-container .main-page-infos .main-page-values {
   color: blue;
+}
+.App .main-page .wrapper-choice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+.App .main-page .wrapper-choice .info-user-choice {
+  font-size: 32px;
+  margin: 0 auto;
+}
+.App .main-page .wrapper-choice .wrapper-button-user-choice {
+  display: flex;
+  justify-content: center;
+}
+.App .main-page .wrapper-choice .wrapper-button-user-choice .button-user-choice {
+  margin: 20px;
+  font-size: 32px;
+  padding: 20px 50px;
 }/*# sourceMappingURL=index.css.map */
