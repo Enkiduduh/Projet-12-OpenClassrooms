@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { UserPerformance } from "./Modelisation";
 
 import {
   Radar,
@@ -17,13 +18,26 @@ function RadarStats({ UserData }) {
   console.log("L'ID DE LA PAGE :", userId);
 
   const [userPerformanceData, setUserPerformanceData] = useState(null);
+  const [formattedData, setFormattedData] = useState(null);
 
   useEffect(() => {
-    const data =
-      UserData &&
-      UserData.user_performance.find((user) => user.userId === userId)?.data;
-    setUserPerformanceData(data);
+    const userData = UserData?.user_performance;
+    if (userData) {
+      const data = UserData.user_performance.find(
+        (user) => user.userId === userId
+      )?.data;
+      setUserPerformanceData(data);
+    }
   }, [UserData, userId]);
+
+  useEffect(() => {
+    if (userPerformanceData) {
+      const model = new UserPerformance(userPerformanceData);
+      const data = model.getFormattedData();
+      setFormattedData(data);
+      console.log(formattedData);
+    }
+  }, [userPerformanceData]);
 
   return (
     <div className="radar-stat">

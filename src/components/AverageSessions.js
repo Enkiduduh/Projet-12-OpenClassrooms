@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { UserAverageSessions } from "./Modelisation";
 import {
   LineChart,
   XAxis,
@@ -15,6 +16,7 @@ function AverageSessions({ UserData }) {
   const userId = parseInt(id);
 
   const [userSessionLengthData, setUserSessionLengthData] = useState(null);
+  const [formattedData, setFormattedData] = useState(null);
 
   useEffect(() => {
     if (UserData) {
@@ -39,6 +41,17 @@ function AverageSessions({ UserData }) {
     }
     return null;
   };
+
+  useEffect(() => {
+    if (userSessionLengthData) {
+      const model = new UserAverageSessions({
+        user_average_sessions: [{ sessions: userSessionLengthData }],
+      });
+      const data = model.getFormattedData();
+      setFormattedData(data);
+      console.log(formattedData);
+    }
+  }, [userSessionLengthData]);
 
   return (
     <div className="average-session">

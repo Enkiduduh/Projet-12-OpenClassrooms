@@ -22,20 +22,6 @@ class UserDailyActivity {
   }
 }
 
-
-
-
-class userMainData {
-  constructor(data) {
-    this.data = data;
-  }
-
-
-  getFormattedData() {
-
-
-  }
-}
 class UserAverageSessions {
   constructor(data) {
     this.data = data;
@@ -72,16 +58,18 @@ class UserPerformance {
       6: "Intensité"
     };
 
-    // Inverser les données et mettre les noms français correspondants
-    this.data.user_performance.forEach((user) => {
-      user.data.reverse().forEach((performance) => {
-        performance.kind = frenchNames[performance.kind];
-      });
-    });
+    const formattedData = this.data.map((user) => ({
+      ...user,
+      data: user.data && user.data.reverse().map((performance) => ({
+        ...performance,
+        kind: frenchNames[performance.kind]
+      }))
+    }));
 
-    return this.data;
+    return formattedData;
   }
 }
 
 
-export { userMainData, UserDailyActivity, UserAverageSessions, UserPerformance}
+
+export { UserDailyActivity, UserAverageSessions, UserPerformance}
