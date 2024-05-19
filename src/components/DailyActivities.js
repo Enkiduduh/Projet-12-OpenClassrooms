@@ -24,7 +24,7 @@ function DailyActivities({ userData }) {
 
   useEffect(() => {
     if (userData) {
-      const data = userData.sessions || userData.activity?.sessions;
+      const data = userData.sessions || userData.user_activity?.sessions;
       console.log("Raw user data:", userData);
       console.log("Extracted sessions data:", data);
       setUserActivityData(data);
@@ -42,21 +42,6 @@ function DailyActivities({ userData }) {
       setMaxWeight(maxWeight);
     }
   }, [userActivityData]);
-
-  // useEffect(() => {
-  //   if (UserData) {
-  //     const userData = UserData.user_activity.find(
-  //       (user) => user.userId === userId
-  //     );
-  //     const { formattedData, minWeight, maxWeight } = new UserDailyActivity(
-  //       userData.sessions
-  //     ).getFormattedData();
-
-  //     setFormattedData(formattedData);
-  //     setMinWeight(minWeight);
-  //     setMaxWeight(maxWeight);
-  //   }
-  // }, [UserData, userId]);
 
   const CustomToolTip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -104,7 +89,7 @@ function DailyActivities({ userData }) {
           >
             <CartesianGrid
               stroke="rgba(222, 222, 222, 1)"
-              strokeDasharray="2 2"
+              strokeDasharray="3 3"
               vertical={false}
 
             />

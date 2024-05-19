@@ -39,13 +39,13 @@ function Dashboard() {
 
   return (
     <div className="main-page-container">
-      {userData ? (
+      {userData && userActivityData && userAverageSessionsData && userPerformanceData ? (
         <>
           <Bonjour user={userData.userInfos.firstName} />
           <div className="main-page-infos">
             <div className="main-page-graphics">
               <div className="upper-graphics">
-                
+
                 <DailyActivities userData={userActivityData} />
               </div>
               <div className="lower-graphics">

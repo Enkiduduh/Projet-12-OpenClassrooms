@@ -9,6 +9,7 @@ import {
   Legend,
   Line,
   ResponsiveContainer,
+  Rectangle,
 } from "recharts";
 
 function AverageSessions({ userData }) {
@@ -21,6 +22,8 @@ function AverageSessions({ userData }) {
   useEffect(() => {
     if (userData) {
       const data = userData.sessions || userData.user_average_sessions?.sessions;
+      console.log("Raw user data:", userData);
+      console.log("Extracted sessions data:", data);
       setUserSessionLengthData(data);
     }
   }, [userData]);
@@ -50,18 +53,22 @@ function AverageSessions({ userData }) {
     }
   }, [userSessionLengthData]);
 
+  const CustomCursor = ({ points }) => {
+    return <Rectangle fill='#000000' opacity={0.2} x={points[0].x} width={500} height={300} />;
+  };
+
   return (
     <div className="average-session">
       <>
         {userSessionLengthData ? (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              width="100%"
-              height="100%"
+              // width="50%"
+              // height="50%"
               data={userSessionLengthData}
               margin={{
                 top: 60,
-                right: 20,
+                right: 0,
                 left: 0,
                 bottom: 10,
               }}
@@ -71,9 +78,9 @@ function AverageSessions({ userData }) {
                 axisLine={{ stroke: "transparent" }}
                 tickLine={false}
                 tick={{
-                  dx: 16,
+                  dx: 1,
                   style: {
-                    fontSize: "14px",
+                    fontSize: "12px",
                     fill: "rgba(200, 200, 200, 1)",
                   },
                 }}
@@ -89,6 +96,7 @@ function AverageSessions({ userData }) {
                 wrapperStyle={{ backgroundColor: "white" }}
                 content={<CustomToolTipSessionLength />}
                 labelFormatter={(value) => `Jour ${value}`}
+                cursor={<CustomCursor/>}
               />
               <Legend />
               <Line
@@ -97,8 +105,9 @@ function AverageSessions({ userData }) {
                 stroke="url(#colorUv)"
                 activeDot={{
                   stroke: "#FFFFFF",
-                  strokeWidth: 8,
-                  r: 4,
+                  strokeWidth: 5,
+                  r: 2,
+                  fill: "#FFFFFF"
                 }}
                 dot={false}
                 legendType="none"

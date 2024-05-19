@@ -56,7 +56,7 @@ async function getUserActivity(userId) {
       }
       const allUserData = await response.json();
       console.log("Local data:", allUserData);
-      const user = allUserData.user_average_sessions.find(
+      const user = allUserData.user_activity.find(
         (activity) => activity.userId === userId
       );
       if (user) {
