@@ -44,8 +44,9 @@ class UserAverageSessions {
 
 
 class UserPerformance {
-  constructor(data) {
+  constructor({ kind, data }) {
     this.data = data;
+    this.kind = kind;
   }
 
   getFormattedData() {
@@ -58,15 +59,10 @@ class UserPerformance {
       6: "Intensité"
     };
 
-    const formattedData = this.data.map((user) => ({
-      ...user,
-      data: user.data && user.data.reverse().map((performance) => ({
-        ...performance,
-        kind: frenchNames[performance.kind]
-      }))
+    return this.data.reverse().map((item) => ({
+      value: item.value,
+      kind: frenchNames[item.kind]
     }));
-
-    return formattedData;
   }
 }
 

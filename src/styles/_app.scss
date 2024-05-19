@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  overflow-y: hidden;
 }
 .App {
   font-family: "Roboto", sans-serif;
@@ -8,12 +9,12 @@ body {
     .main-page-container {
       display: flex;
       flex-direction: column;
-      margin: 50px auto 0 auto;
+      margin: 30px auto 0 auto;
       // justify-content: center;
-      .main-page-bonjour {
-        width: 800px;
-        margin: 30px 0 50px 0;
-      }
+      // .main-page-bonjour {
+      //   width: 1200px;
+      //   margin: 20px 0 20px 0;
+      // }
       .main-page-infos {
         display: flex;
         justify-content: space-around;
@@ -24,13 +25,17 @@ body {
           border-radius: 5px;
           .upper-graphics {
             background-color: whitesmoke;
-            height: 50%;
+            height: 48%;
             border-radius: 5px;
             margin: 0 auto;
             display: flex;
             justify-content: center;
             align-items: end;
             .activity-daily {
+              h3 {
+                font-size: 16px;
+                margin-left: 20px;
+              }
               .tooltipActivity {
                 width: 50px;
                 text-align: center;
@@ -41,14 +46,15 @@ body {
             }
           }
           .lower-graphics {
-            height: 50%;
+            height: 48%;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
+            width: 800px;
             .average-session {
               background-color: red;
               height: 95%;
-              width: 31%;
+              width: 30%;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -64,7 +70,7 @@ body {
             .radar-stat {
               background-color: rgb(44, 43, 43);
               height: 95%;
-              width: 31%;
+              width: 30%;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -74,7 +80,7 @@ body {
             .radial-chart {
               background-color: whitesmoke;
               height: 95%;
-              width: 31%;
+              width: 30%;
               display: flex;
               justify-content: center;
               align-items: center;

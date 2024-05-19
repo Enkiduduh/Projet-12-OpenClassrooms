@@ -11,37 +11,40 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function RadarStats({ UserData }) {
-  const { id } = useParams();
-  const userId = parseInt(id);
+function RadarStats({ userData }) {
+  // const { id } = useParams();
+  // const userId = parseInt(id);
 
-  console.log("L'ID DE LA PAGE :", userId);
-
-  const [userPerformanceData, setUserPerformanceData] = useState(null);
+  const [userPerfDataKind, setUserPerfDataKind] = useState(null);
+  const [userPerfData, setUserPerfData] = useState(null);
+  // const [userPerformanceData, setUserPerformanceData] = useState(null);
   const [formattedData, setFormattedData] = useState(null);
 
   useEffect(() => {
-    const userData = UserData?.user_performance;
     if (userData) {
-      const data = UserData.user_performance.find(
-        (user) => user.userId === userId
-      )?.data;
-      setUserPerformanceData(data);
+      const dataKind = userData.kind || userData.user_performance?.kind;
+      const dataData = userData.data || userData.user_performance?.data;
+      console.log("Raw user data:", userData);
+      console.log("Extracted sessions data:", dataKind);
+      console.log("Extracted sessions data:", dataData);
+
+      setUserPerfDataKind(dataKind);
+      setUserPerfData(dataData);
     }
-  }, [UserData, userId]);
+  }, [userData]);
 
   useEffect(() => {
-    if (userPerformanceData) {
-      const model = new UserPerformance(userPerformanceData);
+    if (userPerfData && userPerfDataKind) {
+      const model = new UserPerformance({ kind: userPerfDataKind, data: userPerfData });
       const data = model.getFormattedData();
       setFormattedData(data);
-      console.log(formattedData);
+      console.log("Formatted performance data:", data);
     }
-  }, [userPerformanceData]);
+  }, [userPerfData, userPerfDataKind]);
 
   return (
     <div className="radar-stat">
-      {userPerformanceData ? (
+      {formattedData ? (
         <ResponsiveContainer width={400} height={200}>
           <RadarChart
             cx={200}
@@ -49,9 +52,9 @@ function RadarStats({ UserData }) {
             outerRadius={130}
             width={500}
             height={500}
-            data={userPerformanceData || []}
+            data={formattedData}
           >
-            <PolarGrid stroke="white" gridType="polygon" radialLines={false} />
+            <PolarGrid stroke="white" gridType="polygon" radialLines={false}  />
             <PolarAngleAxis dataKey="kind" tick={{ fill: "white" }} />
             <PolarRadiusAxis axisLine={false} tick={false} />
             <Radar
@@ -65,7 +68,7 @@ function RadarStats({ UserData }) {
         </ResponsiveContainer>
       ) : (
         <text x={250} y={250} textAnchor="middle" fill="#333">
-          Aucune donnée disponible pour cet utilisateur.
+          Données en cours de chargement.
         </text>
       )}
     </div>

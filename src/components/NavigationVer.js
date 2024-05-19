@@ -7,21 +7,27 @@ import iconHalt from "../assets/icn-halt.png";
 
 function NavigationVer() {
   return (
-    <div className="nav-ver-container">
-      <div className="nav-ver-img-sport">
-        <img src={iconMedit} alt="icône de méditation"></img>
+    <>
+      <div className="nav-ver-container">
+        <div className="nav-ver-wrapper">
+          <div className="nav-ver-img-sport">
+            <img src={iconMedit} alt="icône de méditation"></img>
+          </div>
+          <div className="nav-ver-img-sport">
+            <img src={iconSwim} alt="icône de nageur"></img>
+          </div>
+          <div className="nav-ver-img-sport">
+            <img src={iconRide} alt="icône de cycliste"></img>
+          </div>
+          <div className="nav-ver-img-sport">
+            <img src={iconHalt} alt="icône d'une haltère'"></img>
+          </div>
+        </div>
+        <div className="nav-ver-infos">
+          <span>Copyright, SportSee 2020</span>
+        </div>
       </div>
-      <div className="nav-ver-img-sport">
-        <img src={iconSwim} alt="icône de nageur"></img>
-      </div>
-      <div className="nav-ver-img-sport">
-        <img src={iconRide} alt="icône de cycliste"></img>
-      </div>
-      <div className="nav-ver-img-sport">
-        <img src={iconHalt} alt="icône d'une haltère'"></img>
-      </div>
-      <span className="nav-ver-infos">Copyright, SportSee 2020</span>
-    </div>
+    </>
   );
 }
 

@@ -13,29 +13,50 @@ import {
 } from "recharts";
 import { UserDailyActivity } from "./Modelisation";
 
-function DailyActivities({ UserData }) {
-  const { id } = useParams();
-  const selectedUserId = parseInt(id);
+function DailyActivities({ userData }) {
+  // const { id } = useParams();
+  // const userId = parseInt(id);
 
+  const [userActivityData, setUserActivityData] = useState(null);
   const [minWeight, setMinWeight] = useState(null);
   const [maxWeight, setMaxWeight] = useState(100);
   const [formattedData, setFormattedData] = useState([]);
 
   useEffect(() => {
-    if (UserData) {
-      const userData = UserData.user_activity.find(
-        (user) => user.userId === selectedUserId
-      );
-      const { formattedData, minWeight, maxWeight } = new UserDailyActivity(
-        userData.sessions
-      ).getFormattedData();
+    if (userData) {
+      const data = userData.sessions || userData.activity?.sessions;
+      console.log("Raw user data:", userData);
+      console.log("Extracted sessions data:", data);
+      setUserActivityData(data);
+    }
+  }, [userData]);
 
+  useEffect(() => {
+    if (userActivityData) {
+      const { formattedData, minWeight, maxWeight } = new UserDailyActivity(
+        userActivityData
+      ).getFormattedData();
+      console.log("Formatted data:", formattedData);
       setFormattedData(formattedData);
       setMinWeight(minWeight);
       setMaxWeight(maxWeight);
     }
-  }, [UserData, selectedUserId]);
+  }, [userActivityData]);
 
+  // useEffect(() => {
+  //   if (UserData) {
+  //     const userData = UserData.user_activity.find(
+  //       (user) => user.userId === userId
+  //     );
+  //     const { formattedData, minWeight, maxWeight } = new UserDailyActivity(
+  //       userData.sessions
+  //     ).getFormattedData();
+
+  //     setFormattedData(formattedData);
+  //     setMinWeight(minWeight);
+  //     setMaxWeight(maxWeight);
+  //   }
+  // }, [UserData, userId]);
 
   const CustomToolTip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -66,16 +87,11 @@ function DailyActivities({ UserData }) {
 
   return (
     <div className="activity-daily">
-      {formattedData.length > 0  && (
+      <h3>Activité quotidienne</h3>
+      {formattedData.length ? (
         <ResponsiveContainer width={800} height={180}>
           <BarChart
-            // width={800}
-            // height={180}
-            data={
-              UserData.user_activity.find(
-                (user) => user.userId === selectedUserId
-              ).sessions
-            }
+            data={formattedData}
             margin={{
               top: 5,
               right: 30,
@@ -84,11 +100,13 @@ function DailyActivities({ UserData }) {
             }}
             barSize={10}
             barGap={10}
+
           >
             <CartesianGrid
               stroke="rgba(222, 222, 222, 1)"
               strokeDasharray="2 2"
               vertical={false}
+
             />
             <YAxis dataKey="calories" yAxisId="left" hide={true} />
             <YAxis
@@ -122,8 +140,10 @@ function DailyActivities({ UserData }) {
             <Tooltip
               content={<CustomToolTip />}
               wrapperStyle={{ width: 50, backgroundColor: "red" }}
+              cursor={{ fill: 'rgba(196, 196, 196, 0.5)' }}
+
             />
-            <Legend width={300} wrapperStyle={{ top: -40, right: 30 }} />
+            <Legend width={300} wrapperStyle={{ top: -40, right: 30 }}  />
             <Bar
               dataKey="kilogram"
               fill="#FF0000"
@@ -131,6 +151,7 @@ function DailyActivities({ UserData }) {
               legendType="circle"
               radius={[10, 10, 0, 0]}
               yAxisId="right"
+
             />
             <Bar
               dataKey="calories"
@@ -140,17 +161,24 @@ function DailyActivities({ UserData }) {
               radius={[10, 10, 0, 0]}
               yAxisId="left"
             />
-            <text
-              x={-20}
-              y={-10}
-              fill="#333"
-              fontWeight={500}
-              style={{ position: "absolute" }}
-            >
-              Activité quotidienne
-            </text>
+
           </BarChart>
         </ResponsiveContainer>
+      ) : (
+        <div style={{
+          position: 'absolute',
+          left: '0%',
+          top: '0%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+          width: '100%',
+        }}>
+        <text  textAnchor="middle" fill="#333">
+          Données en cours de chargement.
+        </text>
+        </div>
       )}
     </div>
   );

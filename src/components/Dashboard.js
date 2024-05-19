@@ -6,55 +6,37 @@ import DailyActivities from "./DailyActivities";
 import ScoreRadial from "./ScoreRadial";
 import Bonjour from "./Bonjour";
 import { useParams } from "react-router-dom";
+import {
+  getUser,
+  getUserPerformance,
+  getUserActivity,
+  getAverageSessions,
+} from "../data/callApi";
 
 function Dashboard() {
-  // const [userData2, setUserData2] = useState(null);
-  // const [userNutriment, setUserNutriment] = useState(null);
-  // const [userName, setUserName] = useState(null);
-  const [apiUserData, SetApiUserData] = useState(null);
-  const [localUserData, SetLocalUserData] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [userPerformanceData, setUserPerformanceData] = useState(null);
+  const [userAverageSessionsData, setUserAverageSessionsData] = useState(null);
+  const [userActivityData, setUserActivityData] = useState(null);
 
   const { id } = useParams();
   const userId = parseInt(id);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/user/${userId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch API data");
-        }
-        const userData = await response.json();
-        console.log("API data:", userData);
-        SetApiUserData(userData.data);
-      } catch (error) {
-        console.error("Error fetching API data:", error);
-        try {
-          const response = await fetch(`../db.json`);
-          if (!response.ok) {
-            throw new Error("Failed to fetch local data");
-          }
-          const allUserData = await response.json();
-          console.log("Local data:", allUserData);
-          const user = allUserData.user_main_data.find(
-            (user) => user.id === userId
-          );
-          if (user) {
-            SetLocalUserData(user);
-            console.log(localUserData)
-          } else {
-            throw new Error("User not found in local data");
-          }
-        } catch (error) {
-          console.error("Error fetching local data:", error);
-        }
-      }
+      const userApiData = await getUser(userId);
+      setUserData(userApiData);
+      const userPerfData = await getUserPerformance(userId);
+      setUserPerformanceData(userPerfData);
+      const userAverageData = await getAverageSessions(userId);
+      setUserAverageSessionsData(userAverageData);
+      const userActivData = await getUserActivity(userId);
+      setUserActivityData(userActivData);
     };
 
     fetchData();
   }, [userId]);
 
-  const userData = apiUserData || localUserData;
   return (
     <div className="main-page-container">
       {userData ? (
@@ -63,11 +45,12 @@ function Dashboard() {
           <div className="main-page-infos">
             <div className="main-page-graphics">
               <div className="upper-graphics">
-                <DailyActivities userData={userData} />
+                
+                <DailyActivities userData={userActivityData} />
               </div>
               <div className="lower-graphics">
-                <AverageSessions userData={userData} />
-                <RadarStats userData={userData} />
+                <AverageSessions userData={userAverageSessionsData} />
+                <RadarStats userData={userPerformanceData} />
                 <ScoreRadial userData={userData} />
               </div>
             </div>

@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function AverageSessions({ UserData }) {
+function AverageSessions({ userData }) {
   const { id } = useParams();
   const userId = parseInt(id);
 
@@ -19,13 +19,11 @@ function AverageSessions({ UserData }) {
   const [formattedData, setFormattedData] = useState(null);
 
   useEffect(() => {
-    if (UserData) {
-      const data = UserData.user_average_sessions.find(
-        (user) => user.userId === userId
-      )?.sessions;
+    if (userData) {
+      const data = userData.sessions || userData.user_average_sessions?.sessions;
       setUserSessionLengthData(data);
     }
-  }, [UserData, userId]);
+  }, [userData]);
 
   console.log("L'ID DE LA PAGE :", userId);
 
@@ -49,7 +47,6 @@ function AverageSessions({ UserData }) {
       });
       const data = model.getFormattedData();
       setFormattedData(data);
-      console.log(formattedData);
     }
   }, [userSessionLengthData]);
 
@@ -61,7 +58,7 @@ function AverageSessions({ UserData }) {
             <LineChart
               width="100%"
               height="100%"
-              data={userSessionLengthData || []}
+              data={userSessionLengthData}
               margin={{
                 top: 60,
                 right: 20,
@@ -138,7 +135,7 @@ function AverageSessions({ UserData }) {
           </ResponsiveContainer>
         ) : (
           <text x={250} y={250} textAnchor="middle" fill="#333">
-            Aucune donnée disponible pour cet utilisateur.
+            Données en cours de chargement.
           </text>
         )}
       </>

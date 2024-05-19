@@ -5,14 +5,9 @@ import "../styles/index.css";
 import Dashboard from "./Dashboard";
 
 function User() {
-
-
-
   const { id } = useParams()
-  console.log("L'ID DE LA PAGE :")
   console.log({ id })
-
-
+  
   return (
     <div className="App">
       <NavigationHor />

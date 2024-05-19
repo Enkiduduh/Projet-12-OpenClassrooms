@@ -1,15 +1,36 @@
 .nav-ver-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  width: 80px;
   height: 100vh;
-  background: black;
-  .nav-ver-img-sport {
-    margin: 5px auto;
-    img {
-      width: 50px;
+  width: 80px;
+  .nav-ver-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-content: center;
+    background: black;
+    height: 60%;
+    width: 100%;
+    .nav-ver-img-sport {
+      margin: 5px auto;
+      img {
+        width: 50px;
+      }
+    }
+  }
+  .nav-ver-infos {
+    height: 40%;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    margin: auto;
+    font-size: 10px;
+    background: black;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-content: center;
+    padding-top: 100px;
+    span {
+      color: white;
+      margin: 50px auto;
     }
   }
 }

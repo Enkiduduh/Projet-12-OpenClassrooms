@@ -1,53 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import {
-  RadialBarChart,
-  RadialBar,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { RadialBarChart, RadialBar, ResponsiveContainer } from "recharts";
 
-function ScoreRadial({ UserData }) {
-  const { id } = useParams();
-  const userId = parseInt(id);
+function ScoreRadial({ userData }) {
+  // const { id } = useParams();
+  // const userId = parseInt(id);
 
   const [userScoreData, setUserScoreData] = useState(null);
 
   useEffect(() => {
-    if (UserData) {
-      const data =
-        UserData.user_main_data.find((user) => user.id === userId)
-          ?.todayScore ||
-        UserData.user_main_data.find((user) => user.id === userId)?.score;
-      setUserScoreData(data);
+    if (userData) {
+      const score =
+        userData.score ||
+        userData.user_main_data?.score ||
+        userData.todayScore ||
+        userData.user_main_data?.todayScore;
+      console.log("Raw user data:", userData);
+      console.log("Extracted sessions data:", score);
+
+      if (score) {
+        setUserScoreData([{ name: "score", value: score * 100 }]);
+      }
     }
-  }, [UserData, userId]);
+  }, [userData]);
 
   return (
     <div className="radial-chart">
       <>
-        {userScoreData && (
+        {userScoreData ? (
           <ResponsiveContainer width="100%" height="100%">
             <RadialBarChart
-              width={500}
+              width={300}
               height={300}
-              cx={125}
-              cy={125}
-              innerRadius={90}
-              outerRadius={80}
-              barSize={15}
-              data={[{ score: userScoreData }]}
-              fill="white"
+              cx="50%"
+              cy="50%"
+              innerRadius="70%"
+              outerRadius="80%"
+              barSize={10}
+              data={userScoreData}
+              startAngle={90}
+              endAngle={90 + 360 * (userScoreData[0].value / 100)}
             >
               <RadialBar
                 minAngle={15}
                 fill="red"
                 background
                 clockWise
-                dataKey="score"
+                dataKey="value"
+                cornerRadius={10}
               />
-
+              {/* White inner circle to mask the inside of the red circle
+              <RadialBar
+                minAngle={5}
+                fill="white"
+                clockWise
+                data={[{ value: userScoreData[0].value }]}
+                innerRadius="0%"
+                outerRadius="120%"
+              /> */}
               <text x={20} y={30} fill="black">
                 Score
               </text>
@@ -58,9 +69,8 @@ function ScoreRadial({ UserData }) {
                 stroke="black"
                 fontSize="24"
                 fontWeight={500}
-                startAngle={90}
               >
-                {userScoreData * 100}%
+                {userScoreData[0].value}%
               </text>
               <text x={100} y={130} fill="grey">
                 de votre
@@ -70,6 +80,10 @@ function ScoreRadial({ UserData }) {
               </text>
             </RadialBarChart>
           </ResponsiveContainer>
+        ) : (
+          <text x={250} y={250} textAnchor="middle" fill="#333">
+            Données en cours de chargement.
+          </text>
         )}
       </>
     </div>
