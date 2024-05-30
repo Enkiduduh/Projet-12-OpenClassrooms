@@ -1,11 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-// import Bonjour from "./components/Bonjour";
 import NavigationHor from "./NavigationHor";
 import NavigationVer from "./NavigationVer";
-// import NutrimentIntel from "./components/NutrimentIntel";
-// import RadarStats from "./components/RadarStats";
-import Dashboard from "./Dashboard";
 
 function UserDashboard() {
   return (
@@ -24,7 +20,7 @@ function UserDashboard() {
           </div>
         </div>
 
-        {/* <Dashboard /> */}
+
       </div>
     </div>
   );

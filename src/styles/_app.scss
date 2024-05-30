@@ -6,15 +6,12 @@ body {
   font-family: "Roboto", sans-serif;
   .main-page {
     display: flex;
+    position: relative;
     .main-page-container {
       display: flex;
       flex-direction: column;
       margin: 30px auto 0 auto;
-      // justify-content: center;
-      // .main-page-bonjour {
-      //   width: 1200px;
-      //   margin: 20px 0 20px 0;
-      // }
+
       .main-page-infos {
         display: flex;
         justify-content: space-around;
@@ -32,6 +29,7 @@ body {
             justify-content: center;
             align-items: end;
             .activity-daily {
+              width:800px;
               h3 {
                 font-size: 16px;
                 margin-left: 20px;
@@ -95,9 +93,12 @@ body {
     }
     .wrapper-choice{
       display :flex;
+      position: absolute;
+      top:30%;
+      left:30%;
       flex-direction: column;
-      justify-content: center;
       margin: 0 auto;
+      justify-content: center;
       .info-user-choice {
         font-size: 32px;
         margin: 0 auto;
@@ -114,3 +115,86 @@ body {
     }
   }
 }
+
+@media only screen and (max-width: 1100px) {
+  .main-page-infos {
+    display: flex;
+    justify-content: space-around;
+    .main-page-graphics {
+      width: 800px;
+      height: 500px;
+      margin-right: 50px;
+      border-radius: 5px;
+      .upper-graphics {
+        background-color: whitesmoke;
+        height: 48%;
+        border-radius: 5px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        .activity-daily {
+          width:800px;
+          h3 {
+            font-size: 16px;
+            margin-left: 20px;
+          }
+          .tooltipActivity {
+            width: 50px;
+            text-align: center;
+            margin: 0 auto;
+            color: white;
+            font-size: 10px;
+          }
+        }
+      }
+      .lower-graphics {
+        height: 48%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 800px;
+        .average-session {
+          background-color: red;
+          height: 95%;
+          width: 30%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+          .tooltipSessionLength {
+            width: 40px;
+            text-align: center;
+            margin: 0 auto;
+            color: black;
+            font-size: 10px;
+          }
+        }
+        .radar-stat {
+          background-color: rgb(44, 43, 43);
+          height: 95%;
+          width: 30%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+        }
+
+        .radial-chart {
+          background-color: whitesmoke;
+          height: 95%;
+          width: 30%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+        }
+      }
+    }
+    .main-page-values {
+      color: blue;
+    }
+  }
+}
+
+

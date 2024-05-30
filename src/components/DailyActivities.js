@@ -74,7 +74,7 @@ function DailyActivities({ userData }) {
     <div className="activity-daily">
       <h3>Activité quotidienne</h3>
       {formattedData.length ? (
-        <ResponsiveContainer width={800} height={180}>
+        <ResponsiveContainer width="100%" height={180}>
           <BarChart
             data={formattedData}
             margin={{
